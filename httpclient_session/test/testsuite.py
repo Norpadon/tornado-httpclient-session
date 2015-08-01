@@ -1,5 +1,4 @@
-from httpclient_session.test.testcase import AsyncHTTPTestCase
-
+from httpclient_session.test import AsyncHTTPTestCase
 
 
 class CookieTestCase(AsyncHTTPTestCase):

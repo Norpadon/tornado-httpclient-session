@@ -1,4 +1,7 @@
-from urlparse import urlparse, urlunparse
+try:
+    from urlparse import urlparse, urlunparse
+except ImportError:
+    from urllib.parse import urlparse, urlunparse
 
 from tornado.httputil import _normalized_headers
 
@@ -36,6 +39,12 @@ class MockRequest(object):
     def get_origin_req_host(self):
         return self.get_host()
 
+    @property
+    def origin_req_host(self):
+        """ Python 3 compatibility """
+
+        return self.get_origin_req_host()
+
     def has_header(self, name):
         return name in self._request.headers
 
@@ -65,3 +74,7 @@ class MockResponse(object):
 
     def getheaders(self, name):
         return self._response.headers.get_list(name)
+
+    def get_all(self, name, failobj=None):
+        """ Python 3 changes, see http://bugs.python.org/issue4773. """
+        return self._response.headers.get_list(name) or failobj
