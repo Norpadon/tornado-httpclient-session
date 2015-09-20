@@ -10,6 +10,7 @@ class MockRequest(object):
 
     def __init__(self, request):
         self._request = request
+        self.type = self.get_type()
 
     def get_full_url(self):
         if not self._request.headers.get('host'):
